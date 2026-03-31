@@ -26,4 +26,4 @@ ENV NODE_ENV=production
 # Pass secrets via env vars at runtime:
 #   ANTHROPIC_API_KEY, GITHUB_TOKEN, etc.
 
-ENTRYPOINT ["paperclipai", "onboard"]
+ENTRYPOINT ["paperclipai", "onboard", "--yes", "--run", "--data-dir", "/data"]
