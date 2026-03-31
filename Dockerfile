@@ -17,6 +17,12 @@ RUN npm install --global paperclipai@${PAPERCLIP_VERSION}
 # Create a non-root user to run Paperclip (embedded Postgres refuses to run as root)
 RUN mkdir -p /data && chown node:node /data
 
+# Entrypoint: first boot runs onboard --yes to generate config,
+# then patches host to 0.0.0.0 so the server is reachable outside the container.
+# Subsequent boots skip onboard and go straight to run.
+COPY --chown=node:node docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 USER node
 
 # Data volume — all persistent state lives here
@@ -28,7 +34,4 @@ EXPOSE 3100
 # Environment defaults — override at runtime
 ENV NODE_ENV=production
 
-# Pass secrets via env vars at runtime:
-#   ANTHROPIC_API_KEY, GITHUB_TOKEN, etc.
-
-ENTRYPOINT ["paperclipai", "onboard", "--yes", "--run", "--data-dir", "/data"]
+ENTRYPOINT ["docker-entrypoint.sh"]
