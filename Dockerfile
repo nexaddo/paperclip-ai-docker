@@ -15,7 +15,12 @@ LABEL org.opencontainers.image.version="${PAPERCLIP_VERSION}"
 RUN npm install --global paperclipai@${PAPERCLIP_VERSION}
 
 # Create a non-root user to run Paperclip (embedded Postgres refuses to run as root)
-RUN mkdir -p /data && chown node:node /data
+RUN mkdir -p /data/plugins && chown -R node:node /data
+
+# Pre-install plugins into /data/plugins at build time so they are
+# available on first boot without any runtime network access.
+COPY --chown=node:node plugins/package.json /data/plugins/package.json
+RUN cd /data/plugins && npm install --omit=dev && chown -R node:node /data/plugins
 
 # Entrypoint: first boot runs onboard --yes to generate config,
 # then patches host to 0.0.0.0 so the server is reachable outside the container.

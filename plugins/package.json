@@ -1,0 +1,15 @@
+{
+  "name": "paperclip-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@tomismeta/paperclip-aperture": "^0.3.2",
+    "@yesterday-ai/paperclip-plugin-company-wizard": "^0.1.14",
+    "paperclip-plugin-acp": "^0.2.4",
+    "paperclip-plugin-avp": "^1.0.1",
+    "paperclip-plugin-discord": "^0.3.2",
+    "paperclip-plugin-github-issues": "github:mvanhorn/paperclip-plugin-github-issues",
+    "paperclip-plugin-slack": "^2.0.6",
+    "paperclip-plugin-telegram": "^0.2.4"
+  }
+}
