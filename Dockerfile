@@ -15,11 +15,9 @@ LABEL org.opencontainers.image.version="${PAPERCLIP_VERSION}"
 RUN npm install --global paperclipai@${PAPERCLIP_VERSION}
 
 # Create a non-root user to run Paperclip (embedded Postgres refuses to run as root)
-RUN useradd --uid 1000 --create-home --shell /bin/bash paperclip \
-    && mkdir -p /data \
-    && chown paperclip:paperclip /data
+RUN mkdir -p /data && chown node:node /data
 
-USER paperclip
+USER node
 
 # Data volume — all persistent state lives here
 VOLUME ["/data"]
